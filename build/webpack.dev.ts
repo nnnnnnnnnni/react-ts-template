@@ -12,18 +12,17 @@ export default merge(baseWebpackConfig, {
     rules: [
       {
         test: /\.css$/,
-        use: ['style-loader', "css-loader"],
-        exclude: /node_modules/,
-      },
-      {
-        test: /\.less$/,
-        use: ['style-loader', "less-loader"],
-        exclude: /node_modules/,
-      },
-      {
-        test: /\.scss$/,
-        use: ['style-loader', "scss-loader"],
-        exclude: /node_modules/,
+        use: ['style-loader', {
+          loader: 'css-loader',
+          options: {
+            modules: {
+              localIdentName: '[path][name]__[local]',
+              exportLocalsConvention: "camelCase",
+            },
+            importLoaders: 1,
+            sourceMap: true,
+          }
+        }, 'postcss-loader'],
       },
     ],
   },

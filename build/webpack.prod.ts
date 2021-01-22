@@ -12,28 +12,33 @@ export default merge(baseWebpackConfig, {
     path: resolve("dist"),
     filename: "js/index.[contenthash:8].js",
     chunkFilename: "js/[name].[contenthash:8].js",
+    publicPath: "./",
   },
   module: {
     rules: [
       {
-        test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, "css-loader"],
-        exclude: /node_modules/,
-      },
-      {
-        test: /\.less$/,
-        use: [MiniCssExtractPlugin.loader, "less-loader"],
-        exclude: /node_modules/,
-      },
-      {
-        test: /\.scss$/,
-        use: [MiniCssExtractPlugin.loader, "scss-loader"],
-        exclude: /node_modules/,
+        test: /\.css$/i,
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: "css-loader",
+            options: {
+              modules: {
+                localIdentName: "[path][name]__[local]",
+                exportLocalsConvention: "camelCase",
+              },
+              importLoaders: 1,
+              sourceMap: true,
+            },
+          },
+          "postcss-loader",
+        ],
       },
     ],
   },
-  devtool: "#source-map",
+  devtool: "source-map",
   plugins: [
+    new MiniCssExtractPlugin(),
     new HtmlWebpackPlugin({
       filename: resolve("/dist/index.html"),
       template: "index.html",
@@ -57,9 +62,9 @@ export default merge(baseWebpackConfig, {
   ],
   optimization: {
     splitChunks: {
-      minSize: 20000,
+      minSize: 0,
       minRemainingSize: 0,
-      maxSize: 0,
+      maxSize: 20000,
       minChunks: 1,
       maxAsyncRequests: 30,
       maxInitialRequests: 30,
@@ -76,7 +81,7 @@ export default merge(baseWebpackConfig, {
     minimize: true,
   },
   performance: {
-    hints: 'error',
+    hints: "error",
     maxEntrypointSize: 2000000,
     maxAssetSize: 2000000,
   },
