@@ -1,4 +1,24 @@
+.container {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
 .header {
-  font-size: 20px;
-  color: red;
+  font-size: 40px;
+}
+.author {
+  display: flex;
+  text-decoration: none;
+  color: cornflowerblue;
+  align-items: center;
+  margin-top: 20px;
+}
+img {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
 }

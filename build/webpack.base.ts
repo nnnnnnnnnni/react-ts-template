@@ -1,6 +1,5 @@
 import path from "path";
 import { resolve } from "./utils";
-import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import { Configuration } from "webpack";
 
 const devMode = process.env.NODE_ENV !== "production";
@@ -9,7 +8,7 @@ const baseWebpackConfig: Configuration = {
   context: path.resolve(__dirname, ".."),
   entry: "./src/main.tsx",
   output: {
-    path: path.resolve(__dirname, "../dist"),
+    path: resolve("dist"),
     filename: "[name].js",
     publicPath: "/",
   },
@@ -28,10 +27,6 @@ const baseWebpackConfig: Configuration = {
         options: {
           appendTsSuffixTo: [/\.css$/]
         },
-      },
-      {
-        test: /\.css$/,
-        exclude: /node_modules/,
       },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
